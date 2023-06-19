@@ -1,5 +1,7 @@
 import kotlinx.coroutines.*
-
+//A Dispatcher in Kotlin coroutines is responsible for determining which thread or thread pool
+// the coroutine should be executed on. It manages the execution context for coroutines and
+// controls how they are scheduled and dispatched.
 fun main() = runBlocking {
 
     // this: CoroutineScope instance
