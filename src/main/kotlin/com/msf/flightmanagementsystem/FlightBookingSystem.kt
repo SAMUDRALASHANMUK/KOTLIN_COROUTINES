@@ -9,8 +9,12 @@ class FlightBookingSystem {
 
     // Adds a flight to the booking system.
     fun addFlight(flight: Flight) {
-        flights.add(flight)
-        println("Flight added to the booking system.")
+        if (flight.departureTime.isBefore(flight.arrivalTime)) {
+            flights.add(flight)
+            println("Flight added to the booking system.")
+        } else {
+            println("Invalid flight: Arrival time is earlier than departure time.")
+        }
     }
 
     // Removes a flight from the booking system based on the flight number.
@@ -75,12 +79,17 @@ class FlightBookingSystem {
                 println("ID: ${passenger.id}")
                 println("Name: ${passenger.name}")
                 println("-------- Booked Flights ------------")
-                for (flight in passenger.flights) {
-                    println("Flight Number: ${flight.flightNumber}")
-                    println("Source: ${flight.source}")
-                    println("Destination: ${flight.destination}")
-                    println("Departure Time: ${flight.departureTime}")
-                    println("Arrival Time: ${flight.arrivalTime}\n")
+                if (flights.isNotEmpty()) {
+                    for (flight in passenger.flights) {
+                        println("Flight Number: ${flight.flightNumber}")
+                        println("Source: ${flight.source}")
+                        println("Destination: ${flight.destination}")
+                        println("Departure Time: ${flight.departureTime}")
+                        println("Arrival Time: ${flight.arrivalTime}\n")
+                    }
+                }
+                else{
+                    println("No flights found")
                 }
             }
         } else {
@@ -119,8 +128,15 @@ class FlightBookingSystem {
             val passenger = passengers.firstOrNull { it.id == passengerId }
             val flight = flights.firstOrNull { it.flightNumber == flightNumber }
             if (passenger != null && flight != null) {
-                passenger.bookFlight(flight)
+                // Check if departure time is before arrival time
+                if (flight.departureTime.isBefore(flight.arrivalTime)) {
+                    passenger.bookFlight(flight)
+                } else {
+                    println("Invalid booking: Arrival time is earlier than departure time.")
+                }
             }
         }
     }
+
+
 }
